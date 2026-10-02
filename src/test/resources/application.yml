@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: sentinel-audit-test
+
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.data.redis.RedisReactiveAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+      - org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration
+
+  datasource:
+    url: jdbc:h2:mem:sentinel_test_db;DB_CLOSE_DELAY=-1;MODE=PostgreSQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: false
+
+  kafka:
+    bootstrap-servers: localhost:9092
+
+sentinel:
+  kafka:
+    topics:
+      audit-events: sentinel.audit.events.v1
+      audit-events-dlq: sentinel.audit.events.v1.DLQ
+  cache:
+    timeline-limit: 20
